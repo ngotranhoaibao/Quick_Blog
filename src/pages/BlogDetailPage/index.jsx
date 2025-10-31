@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import api from "@/services/api";
+import getPost from "@/services/api";
 import BlogDetail from "@/components/BlogDetail";
 
 const BlogDetailPage = () => {
@@ -12,7 +12,7 @@ const BlogDetailPage = () => {
 
     (async () => {
       try {
-        const { data } = await api.get(`/posts/${id}`);
+        const { data } = await getPost.get(`/posts/${id}`);
         const result = data?.item || data || {};
         setPost({
           id: result._id ,

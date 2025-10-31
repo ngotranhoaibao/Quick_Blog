@@ -8,47 +8,65 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 
-const CardSignIn = () => {
+const CardSignIn = ({
+  handleLogin,
+  email,
+  setEmail,
+  password,
+  setPassword,
+  loading,
+  setLoading,
+}) => {
   return (
-      <Card className="w-full max-w-sm p-8">
-        <CardContent className="flex flex-col items-center justify-center gap-4 w-full max-w-xs mx-auto p-0">
-          <Link to="/" data-discover="true" className="inline-block">
-            <img
-              src="/Images/logo.png"
-              alt="logo"
-              className="w-16 h-16 object-contain"
-            />
-          </Link>
-
-          <Input
-            data-slot="input"
-            type="email"
-            placeholder="Enter your email"
-            className="h-9 w-full bg-transparent border border-input"
+    <Card className="w-full max-w-sm p-8">
+      <CardContent className="flex flex-col items-center justify-center gap-4 w-full max-w-xs mx-auto p-0">
+        <Link to="/" data-discover="true" className="inline-block">
+          <img
+            src="/Images/logo.png"
+            alt="logo"
+            className="w-16 h-16 object-contain"
           />
-          <Input
-            data-slot="input"
-            type="password"
-            placeholder="Enter your password"
-            className="h-9 w-full bg-transparent border border-input"
-          />
-          <Button data-slot="button" type="submit" className="w-full h-9">
-            Login
-          </Button>
-          <div className="mt-2 text-center">
-            <span className="text-sm text-gray-500">
-              Donn' t have an account?
-              <Link to="/sign-up" data-discover="true" className="text-primary">
-                Signup
-              </Link>
-            </span>
-          </div>
-        </CardContent>
+        </Link>
 
-        <CardFooter className="p-0" />
-        <CardDescription className="hidden" />
-      </Card>
+        <Input
+          data-slot="input"
+          type="email"
+          placeholder="Enter your email"
+          className="h-9 w-full bg-transparent border border-input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          data-slot="input"
+          type="password"
+          placeholder="Enter your password"
+          className="h-9 w-full bg-transparent border border-input"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          onClick={handleLogin}
+          data-slot="button"
+          type="submit"
+          className="w-full h-9"
+        >
+          Login
+        </Button>
+        <div className="mt-2 text-center">
+          <span className="text-sm text-gray-500">
+            Donn' t have an account?
+            <Link to="/sign-up" data-discover="true" className="text-primary">
+              Signup
+            </Link>
+          </span>
+        </div>
+      </CardContent>
+
+      <CardFooter className="p-0" />
+      <CardDescription className="hidden" />
+    </Card>
   );
 };
 

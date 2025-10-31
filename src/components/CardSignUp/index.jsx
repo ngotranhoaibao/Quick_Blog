@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-const CardSignUp = () => {
+const CardSignUp = ({ register, email, setEmail, password, setPassword, username, setUsername }) => {
+
   return (
       <Card className="w-full max-w-sm p-8">
         <CardContent className="flex flex-col items-center justify-center gap-4 w-full max-w-xs mx-auto p-0">
@@ -26,20 +27,27 @@ const CardSignUp = () => {
             type="email"
             placeholder="Enter your email"
             className="h-9 w-full bg-transparent border border-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+
           />
           <Input
             data-slot="input"
             type="username"
             placeholder="Enter your username"
             className="h-9 w-full bg-transparent border border-input"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <Input
             data-slot="input"
             type="password"
             placeholder="Enter your password"
             className="h-9 w-full bg-transparent border border-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <Button data-slot="button" type="submit" className="w-full h-9">
+          <Button data-slot="button" type="submit" className="w-full h-9" onClick={register}>
             Login
           </Button>
           <div className="mt-2 text-center">
