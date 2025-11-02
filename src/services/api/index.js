@@ -1,12 +1,41 @@
-import axios from "axios";
+import axios from 'axios'
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, 
-  timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+const API_URL = import.meta.env.VITE_API_URL
 
+const apiInstance = axios.create({
+    baseURL: API_URL,
+})
 
-export default api;
+//Interceptor thêm header Authorization
+apiInstance.interceptors.request.use(
+    (config) => {
+        const parseUserInfo = JSON.parse(localStorage.getItem('userInfo'))
+        const token = parseUserInfo?.accessToken
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`
+        }
+        return config
+    },
+    (error) => {
+        return Promise.reject(error)
+    }
+)
+
+//Interceptor xử lý lỗi
+apiInstance.interceptors.response.use(
+    (response) => {
+        return response
+    },
+    (error) => {
+        if (window.location.href.includes('/sign-in')) {
+            return Promise.reject(error)
+        }
+        if (error.response.status === 401) {
+            localStorage.removeItem('token')
+            window.location.href = '/sign-in'
+        }
+        return Promise.reject(error)
+    }
+)
+
+export default apiInstance

@@ -1,33 +1,30 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import getPost from "@/services/api";
+import { getPost } from "@/services/api/blog";
 import BlogDetail from "@/components/BlogDetail";
-
 const BlogDetailPage = () => {
   const { id } = useParams();
   const [post, setPost] = React.useState(null);
 
   React.useEffect(() => {
     if (!id) return;
-
     (async () => {
       try {
-        const { data } = await getPost.get(`/posts/${id}`);
-        const result = data?.item || data || {};
+        const data = await getPost(id);
         setPost({
-          id: result._id ,
-          title: result.title ,
+          id: data._id || data.id,
+          title: data.title || "Untitled",
           author:
-            typeof result.author === "object"
-              ? result.author?.username || result.author?.name || "Admin"
-              : result.author || "Admin",
-          image: result.image ,
-          createdAt: result.createdAt,
-          content: result.content ,
-          tags: Array.isArray(result.tags) ? result.tags : [],
+            typeof data.author === "object"
+              ? data.author?.username || data.author?.name || "Admin"
+              : data.author || "Admin",
+          image: data.image || "",
+          createdAt: data.createdAt,
+          content: data.content || "",
+          tags: Array.isArray(data.tags) ? data.tags : [],
         });
       } catch (err) {
-        console.error( err);
+        console.error(err);
       }
     })();
   }, [id]);

@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import AnimatedWave from "@/components/lightswind/animated-wave";
 import "./../../components/lightswind.css";
 import CardSignUp from "@/components/CardSignUp";
 import { useState } from "react";
-import { registerUser } from "@/services/api/auth";
+import AuthContext from "@/contexts/authContext";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 const Signup = () => {
   const Navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const register = async () => {
+  const {registerUser} = useContext(AuthContext);
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (!email || !username || !password) {
+      toast.error("Vui lòng nhập đủ email, username và password");
+      return;
+    }
     try {
-      const response = await registerUser(email, password, username);
-      console.log(response);
+      await registerUser({ email, username, password });
       toast.success("Register Success");
-      Navigate("/");
+      Navigate("/"); 
     } catch (error) {
       console.error(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Register failed");
     }
   };
   return (
@@ -28,7 +33,7 @@ const Signup = () => {
         <AnimatedWave />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center">
           <CardSignUp
-            register={register}
+            handleRegister={handleRegister}
             email={email}
             setEmail={setEmail}
             password={password}

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-const CardSignUp = ({ register, email, setEmail, password, setPassword, username, setUsername }) => {
+const CardSignUp = ({ handleRegister, email, setEmail, password, setPassword, username, setUsername }) => {
 
   return (
       <Card className="w-full max-w-sm p-8">
@@ -24,20 +24,20 @@ const CardSignUp = ({ register, email, setEmail, password, setPassword, username
 
           <Input
             data-slot="input"
-            type="email"
-            placeholder="Enter your email"
+            type="username"
+            placeholder="Enter your name"
             className="h-9 w-full bg-transparent border border-input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
 
           />
           <Input
             data-slot="input"
-            type="username"
+            type="text"
             placeholder="Enter your username"
             className="h-9 w-full bg-transparent border border-input"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Input
             data-slot="input"
@@ -47,8 +47,8 @@ const CardSignUp = ({ register, email, setEmail, password, setPassword, username
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button data-slot="button" type="submit" className="w-full h-9" onClick={register}>
-            Login
+          <Button data-slot="button" type="submit" className="w-full h-9" onClick={handleRegister}>
+            Signup
           </Button>
           <div className="mt-2 text-center">
             <span className="text-sm text-gray-500">

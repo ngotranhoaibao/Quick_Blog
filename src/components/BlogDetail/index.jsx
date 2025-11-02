@@ -1,4 +1,5 @@
 import React from "react";
+
 const BlogDetail = ({ post }) => {
   if (!post) return null;
   const date = post.createdAt

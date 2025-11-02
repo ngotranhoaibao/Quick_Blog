@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+const toPlainText = (html = "") => html.replace(/<[^>]+>/g, "");
+
 const BlogListCard = ({ posts = [], loading = false }) => {
   if (loading) {
     return (
@@ -20,11 +22,11 @@ const BlogListCard = ({ posts = [], loading = false }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
       {posts.map((post, idx) => {
-        const id = post._id || post.id || idx; 
-        const title = post.title ;
-        const image = post.image ;
-        const tags = Array.isArray(post.tags) ? post.tags : [];
-        const content = post.content || "".slice(0, 140) + (post.content ? " ..." : "");
+        const id = post?._id || post?.id || idx;
+        const title = post?.title || "Untitled";
+        const image = post?.image || "";
+        const tags  = Array.isArray(post?.tags) ? post.tags : [];
+        const excerpt = toPlainText(post?.content || "").slice(0, 140) + (post?.content ? " ..." : "");
 
         return (
           <div key={id}>
@@ -35,23 +37,23 @@ const BlogListCard = ({ posts = [], loading = false }) => {
                 ) : (
                   <div className="w-full h-48 bg-muted" />
                 )}
+
                 <div className="p-4 bg-card">
                   {!!tags.length && (
                     <div className="flex gap-2 mb-2">
                       {tags.map((tag, i) => (
                         <span
                           key={`${tag}-${i}`}
-                          className="inline-flex items-center justify-center border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 overflow-hidden border-transparent bg-[#dcdafa] text-primary rounded-full"
+                          className="inline-flex items-center justify-center border px-2 py-0.5 text-xs font-medium bg-[#dcdafa] text-primary rounded-full"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
                   )}
-                  <h5 className="text-lg font-semibold mb-2 text-ellipsis whitespace-nowrap overflow-hidden">
-                    {title}
-                  </h5>
-                  <p className="text-foreground mb-2 text-xs line-clamp-2">{content}</p>
+
+                  <h5 className="text-lg font-semibold mb-2 truncate">{title}</h5>
+                  <p className="text-foreground mb-2 text-xs line-clamp-2">{excerpt}</p>
                 </div>
               </div>
             </Link>

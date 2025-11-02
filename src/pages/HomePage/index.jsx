@@ -1,6 +1,7 @@
 import React from "react";
 import BlogListCard from "@/components/BlogListCard";
-import api from "@/services/api";
+import { getPosts } from "@/services/api/blog";
+import { Button } from "@/components/ui/button";
 const HomePage = () => {
   const [posts, setPosts] = React.useState([]);
   const [filtered, setFiltered] = React.useState([]);
@@ -8,12 +9,17 @@ const HomePage = () => {
   const [query, setQuery] = React.useState("");
   const fetchPosts = async () => {
     setLoading(true);
-    const res = await api.get("/posts");
-    const items = res?.data?.items || [];
-    console.log("items", items);
-    setPosts(items);
-    setFiltered(items);
-    setLoading(false);
+    try {
+      const items = await getPosts();
+      setPosts(items);
+      setFiltered(items);
+    } catch (err) {
+      console.error("Fetch posts error:", err);
+      setPosts([]);
+      setFiltered([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   React.useEffect(() => {
@@ -58,12 +64,12 @@ const HomePage = () => {
             placeholder="Enter search title..."
             className="w-full pl-4 h-9 bg-transparent outline-none border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground text-base md:text-sm"
           />
-          <button
+          <Button
             type="submit"
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium h-9 bg-primary text-white px-8 py-2 m-1.5 rounded transition-all cursor-pointer hover:bg-primary/90 focus-visible:ring-[3px] focus-visible:ring-ring/50"
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium h-9 bg-primary  px-8 py-2 m-1.5 rounded transition-all cursor-pointer hover:bg-primary/90 focus-visible:ring-[3px] focus-visible:ring-ring/50"
           >
             Search
-          </button>
+          </Button>
         </form>
       </div>
       <BlogListCard posts={filtered} loading={loading} />
