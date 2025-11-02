@@ -28,7 +28,7 @@ const Header = () => {
   );
 
   const handleCreateClick = () => {
-    if (isLoggedIn) navigate("/createblog");
+    if (isLoggedIn) navigate("/create-blog");
     else navigate("/sign-in");
   };
 

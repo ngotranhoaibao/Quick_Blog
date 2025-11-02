@@ -8,15 +8,23 @@ import {
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "@/contexts/authContext";
-
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 export function DropDown({ handleLogout }) {
   const { userInfo } = useContext(AuthContext);
-  const role = userInfo?.user?.role || userInfo?.role || "user";
+  const role = userInfo?.user?.role || userInfo?.role;
+  const navigate = useNavigate();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="h-9 px-2">
+        <Button variant="outline" className="h-9 px-2" onClick={() => {
+              if (!userInfo) {
+                toast("Vui lòng đăng nhập để xem bài viết của bạn");
+                navigate("/sign-in", { state: { redirectTo: "/my-posts" } });
+                return;
+              }
+              navigate("/my-posts");} }>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
