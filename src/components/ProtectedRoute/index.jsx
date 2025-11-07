@@ -5,6 +5,8 @@ import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children, role: requiredRole }) => {
   const { userInfo, role } = useContext(AuthContext);
+  console.log(userInfo, role);
+
   if (!userInfo) {
     return <Navigate to="/sign-in" />;
   }

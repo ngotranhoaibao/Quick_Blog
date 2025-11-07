@@ -1,19 +1,20 @@
 import React, { useState, createContext } from "react";
-import { loginUser, getMe,logoutUser, register } from "@/services/api/auth";
+import { loginUser, getMe, logoutUser, register } from "@/services/api/auth";
 import { toast } from "react-hot-toast";
-
+import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
-
 export const AuthContextProvider = ({ children }) => {
-  const [userInfo, setUserInfo] = useState(null);
-
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem("userInfo")) || []
+  );
   const loginContext = async (email, password) => {
     try {
       const res = await loginUser({ email, password });
-
       if (res.status === 200) {
         setUserInfo(res.data.user);
         localStorage.setItem("userInfo", JSON.stringify(res.data));
+        navigate("/");
       }
       try {
         const me = await getMe();
@@ -22,7 +23,6 @@ export const AuthContextProvider = ({ children }) => {
           const updated = { ...oldData, user: me.data?.user || me.data };
           localStorage.setItem("userInfo", JSON.stringify(updated));
           setUserInfo(updated);
-
           toast.success("Đăng nhập thành công!");
         } else {
           toast.error("Không thể lấy thông tin người dùng!");
@@ -44,15 +44,26 @@ export const AuthContextProvider = ({ children }) => {
     } catch (error) {
       console.error(error);
     }
-  }
-  const registerUser = async ({ email, username, password }) => {
-    return await register({ email, username, password });
+  };
+  const registerUser = async (payload) => {
+    try {
+      const res = await register(payload);
+      if (res.status === 200) {
+        setUserInfo(res.data.user);
+        localStorage.setItem("userInfo", JSON.stringify(res.data));
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
-    <AuthContext.Provider value={{ userInfo, loginContext,logout,registerUser }}>
+    <AuthContext.Provider
+      value={{ userInfo, loginContext, logout, registerUser }}
+    >
+      
       {children}
     </AuthContext.Provider>
   );
 };
-
 export default AuthContext;

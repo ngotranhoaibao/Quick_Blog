@@ -1,7 +1,5 @@
-// pages/Signin.jsx
 import React, { useState, useContext } from "react";
 import AnimatedWave from "@/components/lightswind/animated-wave";
-import "./../../components/lightswind.css";
 import CardSignIn from "@/components/CardSignIn";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "@/contexts/authContext";
@@ -20,7 +18,6 @@ const Signin = () => {
     setLoading(true);
     try {
       await loginContext(email, password);
-      navigate("/");
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.message || "Login failed");

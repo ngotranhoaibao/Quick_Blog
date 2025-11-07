@@ -11,3 +11,6 @@ export const getPost = async (id) => {
     const result = res?.data?.item || res?.data || {};
     return result;
 };
+export const createPost = async (payload) => {
+    return await api.post("/posts", payload);
+};

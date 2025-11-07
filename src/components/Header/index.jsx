@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { DropDown } from "@/components/DropDown"; 
+import { DropDown } from "@/components/DropDown";
 import AuthContext from "@/contexts/authContext";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const navigate = useNavigate();
-  const { userInfo, logout } = React.useContext(AuthContext);
+  const { userInfo, logout } = useContext(AuthContext);
+  console.log(userInfo);
   useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
@@ -19,8 +20,8 @@ const Header = () => {
   }, [theme]);
   const handleLogout = () => {
     logout();
-  }
-   const isLoggedIn = !!(
+  };
+  const isLoggedIn = !!(
     userInfo?.accessToken ||
     userInfo?.token ||
     JSON.parse(localStorage.getItem("userInfo") || "{}")?.accessToken ||
@@ -44,25 +45,25 @@ const Header = () => {
         </Link>
 
         <div className="flex justify-end items-center gap-2">
-            <Button onClick={handleCreateClick}  className="bg-primary">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-              </svg>
-              Create Blog
-            </Button>
+          <Button onClick={handleCreateClick} className="bg-primary">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-2"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14" />
+              <path d="M12 5v14" />
+            </svg>
+            Create Blog
+          </Button>
 
           <Button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

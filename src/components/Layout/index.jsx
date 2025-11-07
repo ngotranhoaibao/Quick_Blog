@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import Footer from "../Footer";
 const Layout = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+    <div className="">
       <Header />
       <main className="grid gap-6 mx-5 max-w-7xl md:mx-auto my-10 mt-20 mb-6 min-h-[60vh]">
         <Outlet />

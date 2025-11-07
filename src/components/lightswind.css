@@ -76,7 +76,7 @@
   --popover: 0 0% 5%;
   --popover-foreground: 0 0% 100%;
 
-  --primary: 0 0% 100%;
+  --primary: #6156e7;
   --primary-foreground: 0 0% 0%;
 
   --secondary: 0 0% 15%;
@@ -633,7 +633,8 @@ body {
 }
 
 .text-primary {
-  color: hsl(var(--primary));
+  color: hsl(var(--
+  ));
 }
 .bg-primary {
   background-color: hsl(var(--primary));
