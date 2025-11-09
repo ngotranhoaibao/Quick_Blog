@@ -3,15 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-  font-size: revert;
-  font-weight: revert;
-  margin: revert;
-}
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -132,5 +123,4 @@ h5 {
 
 button {
   cursor: pointer;
-  color: white
 }

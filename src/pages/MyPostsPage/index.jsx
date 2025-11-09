@@ -66,7 +66,7 @@ const MyPostsPage = () => {
 
   return (
     <div className="overflow-auto">
-      <h2 className="hero-title text-3xl! sm:text-5xl font-semibold sm:leading-[4rem] text-primary text-center mt-10 mb-8">
+      <h2 className="hero-title text-3xl sm:text-5xl font-semibold sm:leading-[4rem] text-primary text-center mt-10 mb-8">
         ✍️ My Post
       </h2>
       <ListPost

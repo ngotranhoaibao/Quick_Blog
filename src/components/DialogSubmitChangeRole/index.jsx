@@ -49,13 +49,13 @@ const DialogSubmitChangeRole = ({
               <SelectGroup>
                 <SelectLabel>Available Roles</SelectLabel>
 
-                <SelectItem value="user">
-                  <IconUser stroke={2} className="mr-2" />
+                <SelectItem className="text-black" value="user">
+                  <IconUser stroke={2} className="mr-2 h-4 w-4" />
                   User
                 </SelectItem>
 
                 <SelectItem value="admin">
-                  <IconShieldCheckFilled className="mr-2" />
+                  <IconShieldCheckFilled className="mr-2 text-yellow-600 h-4 w-4" />
                   Admin
                 </SelectItem>
               </SelectGroup>
@@ -65,7 +65,7 @@ const DialogSubmitChangeRole = ({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline" >Cancel</Button>
           </DialogClose>
 
           <DialogClose asChild>
