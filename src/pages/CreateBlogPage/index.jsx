@@ -111,6 +111,7 @@ const CreateBlogPage = () => {
         setContent={setBlogContent}
         title={blogTitle}
         setTitle={setBlogTitle}
+        loading={loading}
       />
     </div>
   );

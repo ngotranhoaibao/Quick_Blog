@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Editor } from "@tinymce/tinymce-react";
 import { Badge } from "../ui/badge";
 import { IconX } from "@tabler/icons-react";
-
+import { Spinner } from "../ui/spinner";
 const FormUpload = ({
   handleAddTag,
   tags,

@@ -36,7 +36,7 @@ export function DropDown({ handleLogout }) {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        align="start"
+        align="end"
         className="min-w-40 w-fit p-2 rounded-md border shadow-md z-50"
       >
         {!isLoggedIn ? (

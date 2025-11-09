@@ -13,7 +13,6 @@ export default function UserManagement() {
   const [loadingList, setLoadingList] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [role, setRole] = useState("user");
-
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -77,6 +76,7 @@ export default function UserManagement() {
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Đổi role thất bại");
+      fetchUsers();
     }
   };
 

@@ -14,7 +14,6 @@ const MyPostsPage = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [postId, setPostId] = useState(null);
-  const [loadingDelete, setLoadingDelete] = useState(false);
 
   const fetchMyPosts = useCallback(async () => {
     if (!userInfo?.user?.id) return;
