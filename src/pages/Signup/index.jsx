@@ -9,19 +9,24 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const { registerUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
       await registerUser({ email, password, username });
+
       toast.success("Đăng ký thành công!");
       navigate("/");
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.message || "Register failed");
-      
     }
+    setLoading(false);
   };
 
   return (
@@ -37,6 +42,7 @@ const Signup = () => {
             setPassword={setPassword}
             username={username}
             setUsername={setUsername}
+            loading={loading}
           />
         </div>
       </div>
