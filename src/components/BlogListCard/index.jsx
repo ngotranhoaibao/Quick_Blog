@@ -30,7 +30,7 @@ const BlogListCard = ({ posts = [], loading = false }) => {
 
         return (
           <div key={id}>
-            <Link className="grid h-full" data-discover="true" to={`/blog-detail/${id}`}>
+            <Link className="grid h-full" data-discover="true" to={`/blog-details/${id}`}>
               <div className="shadow-lg rounded-lg overflow-hidden transition-transform hover:scale-[1.02]">
                 {image ? (
                   <img alt={title} className="w-full h-48 object-cover" src={image} loading="lazy" />
