@@ -49,8 +49,10 @@ export default function UserManagement() {
 
       setUsers((prev) => prev.filter((u) => u._id !== selectedUser._id));
       toast.success("Xóa user thành công!");
+      fetchUsers
     } catch (error) {
       toast.error(error?.response?.data?.message || "Xóa user thất bại");
+      await fetchUsers();
     } finally {
       setDeleting(false);
       setOpenDelete(false);

@@ -11,10 +11,10 @@ const MyPostsPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [postTitle, setPostTitle] = useState("");
-
   const [openDelete, setOpenDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [postId, setPostId] = useState(null);
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   const fetchMyPosts = useCallback(async () => {
     if (!userInfo?.user?.id) return;
@@ -45,7 +45,7 @@ const MyPostsPage = () => {
     setPostTitle(title);
     setOpenDelete(true);
   };
-
+  
   const handleDelete = async () => {
     if (!postId) return;
     try {
@@ -53,9 +53,9 @@ const MyPostsPage = () => {
       setPosts((prev) => prev.filter((p) => p._id !== postId));
       await deletePost(postId);
       toast.success("Xóa bài viết thành công!");
+      await fetchMyPosts();
     } catch (err) {
       toast.error("Xóa thất bại. Vui lòng thử lại.");
-      await fetchMyPosts();
       console.error(err);
     } finally {
       setDeleting(false);
