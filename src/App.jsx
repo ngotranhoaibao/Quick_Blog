@@ -9,7 +9,7 @@ import BlogDetailPage from "./pages/BlogDetailPage";
 import { Toaster } from "react-hot-toast";
 import { AuthContextProvider } from "./contexts/authContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import UserManagement from "./pages/UserManagement";
+import UserManagement from "./pages/UserManagementPage";
 import MyPostsPage from "./pages/MyPostsPage";
 function App() {
   return (
@@ -22,29 +22,31 @@ function App() {
             <Route
               path="create-blog"
               element={
-                <ProtectedRoute >
+                <ProtectedRoute>
                   <CreateBlogPage />
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="user-management"
               element={
-                <ProtectedRoute role="admin">
+                <ProtectedRoute role={["admin"]}>
                   <UserManagement />
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="my-posts"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute role={["user", "admin"]}>
                   <MyPostsPage />
                 </ProtectedRoute>
               }
             />
 
-            <Route path="blog-detail/:id" element={<BlogDetailPage />} />
+            <Route path="blog-details/:id" element={<BlogDetailPage />} />
           </Route>
 
           <Route path="/sign-in" element={<Signin />} />

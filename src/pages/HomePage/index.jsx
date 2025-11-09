@@ -1,6 +1,6 @@
 import React from "react";
 import BlogListCard from "@/components/BlogListCard";
-import { getPosts } from "@/services/api/blog";
+import { getAllPost } from "@/services/api/blog";
 import { Button } from "@/components/ui/button";
 const HomePage = () => {
   const [posts, setPosts] = React.useState([]);
@@ -10,7 +10,7 @@ const HomePage = () => {
   const fetchPosts = async () => {
     setLoading(true);
     try {
-      const items = await getPosts();
+      const items = await getAllPost();
       setPosts(items);
       setFiltered(items);
     } catch (err) {

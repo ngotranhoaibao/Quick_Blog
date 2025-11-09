@@ -28,7 +28,7 @@ const BlogDetailPage = () => {
       }
     })();
   }, [id]);
-
+  
   return (
     <div className="py-8">
       <BlogDetail post={post} />

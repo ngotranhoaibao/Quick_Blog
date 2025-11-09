@@ -78,12 +78,15 @@ const FormUpload = ({
 
       <div className="flex gap-2 mt-2 flex-wrap">
         {tags.map((tag) => (
-          <Badge key={tag.id} className="flex items-center gap-1">
+          <Badge key={tag.id} className="flex items-center gap-1 pr-1">
             {tag.name}
-            <IconX
-              className="h-3 w-3 cursor-pointer"
-              onClick={() => handleDeleteTag(tag.id)}
-            />
+            <button
+              type="button"
+              onClick={() => handleDeleteTag(tag.id)} 
+              className="p-0.5 "
+            >
+              <IconX className="h-3 w-3" />
+            </button>
           </Badge>
         ))}
       </div>

@@ -1,17 +1,20 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import AuthContext from "@/contexts/authContext";
-import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children, role: requiredRole }) => {
-  const { userInfo, role } = useContext(AuthContext);
-  console.log(userInfo, role);
-
-  if (!userInfo) {
-    return <Navigate to="/sign-in" />;
+const ProtectedRoute = ({ children, role }) => {
+  const { userInfo } = useContext(AuthContext);
+  const location = useLocation();
+  const hasToken = !!userInfo?.accessToken || !!userInfo?.token;
+  if (!userInfo || !hasToken) {
+    return <Navigate to="/sign-in" state={{ from: location }} replace />;
   }
-  if (role !== requiredRole) {
-    return <Navigate to="/" />;
+  const currentRole = userInfo?.user?.role ?? userInfo?.role ?? null;
+  if (role) {
+    const allowed = Array.isArray(role) ? role : String(role).split(/\s+/); // hỗ trợ "admin" hoặc "user admin"
+    if (!allowed.includes(currentRole)) {
+      return <Navigate to="/" replace />;
+    }
   }
   return children;
 };

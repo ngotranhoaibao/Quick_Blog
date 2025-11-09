@@ -2,33 +2,36 @@ import React, { useState, createContext } from "react";
 import { loginUser, getMe, logoutUser, register } from "@/services/api/auth";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+
 const AuthContext = createContext();
+
 export const AuthContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(
-    JSON.parse(localStorage.getItem("userInfo")) || []
+    JSON.parse(localStorage.getItem("userInfo")) || null
   );
+
   const loginContext = async (email, password) => {
     try {
       const res = await loginUser({ email, password });
       if (res.status === 200) {
-        setUserInfo(res.data.user);
+        setUserInfo(res.data);
         localStorage.setItem("userInfo", JSON.stringify(res.data));
         navigate("/");
       }
       try {
         const me = await getMe();
         if (me.status === 200) {
-          const oldData = JSON.parse(localStorage.getItem("userInfo")) || {};
-          const updated = { ...oldData, user: me.data?.user || me.data };
+          const old = JSON.parse(localStorage.getItem("userInfo")) || {};
+          const updated = { ...old, user: me.data?.user || me.data };
           localStorage.setItem("userInfo", JSON.stringify(updated));
           setUserInfo(updated);
           toast.success("Đăng nhập thành công!");
         } else {
           toast.error("Không thể lấy thông tin người dùng!");
         }
-      } catch (error) {
-        console.error(" Lỗi getMe:", error);
+      } catch (err) {
+        console.error("Lỗi getMe:", err);
         toast.error("Không thể lấy thông tin người dùng!");
       }
     } catch (error) {
@@ -36,20 +39,21 @@ export const AuthContextProvider = ({ children }) => {
       toast.error(error.response?.data?.message || "Login failed");
     }
   };
+
   const logout = async () => {
     try {
       await logoutUser();
-      setUserInfo(null);
-      localStorage.removeItem("userInfo");
-    } catch (error) {
-      console.error(error);
-    }
+    } catch {}
+    setUserInfo(null);
+    localStorage.removeItem("userInfo");
+    navigate("/sign-in", { replace: true });
   };
+
   const registerUser = async (payload) => {
     try {
       const res = await register(payload);
       if (res.status === 200) {
-        setUserInfo(res.data.user);
+        setUserInfo(res.data);
         localStorage.setItem("userInfo", JSON.stringify(res.data));
         navigate("/");
       }
@@ -57,13 +61,12 @@ export const AuthContextProvider = ({ children }) => {
       console.error(error);
     }
   };
+
   return (
-    <AuthContext.Provider
-      value={{ userInfo, loginContext, logout, registerUser }}
-    >
-      
+    <AuthContext.Provider value={{ userInfo, loginContext, logout, registerUser }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
 export default AuthContext;
